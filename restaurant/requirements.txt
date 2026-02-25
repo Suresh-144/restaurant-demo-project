@@ -1,0 +1,7 @@
+django
+stripe
+celery
+redis
+python-dotenv
+gunicorn
+psycopg2-binary
