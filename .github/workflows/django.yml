@@ -43,5 +43,5 @@ jobs:
 
     - name: Run Tests
       run: |
-        # Runs tests for your apps: home, about, and contact
+       
         python manage.py test
