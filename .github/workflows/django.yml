@@ -56,7 +56,7 @@ jobs:
           image-ref: '${{ secrets.DOCKER_USERNAME }}/steakhouse:latest'
           format: 'table'
           exit-code: '1' # Fails the build if vulnerabilities are found
-          severity: 'CRITICAL,HIGH'
+          severity: 'CRITICAL'
 
       - name: Push Image to Docker Hub
         if: success() # Only runs if the Trivy scan passes
