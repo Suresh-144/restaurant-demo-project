@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-7wx=6q7l0ho(9eabjyzrrr_+lu7s9@k8-i-mrnj_-+zydgi0di'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -89,16 +89,12 @@ DATABASES = {
     }
 }
 
-# Password validation
-# https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
-
-# Get the string from .env and split it by commas
+# Password validation configuration
 validators_str = os.getenv('AUTH_PASSWORD_VALIDATORS_LIST', '')
 validators_list = validators_str.split(',') if validators_str else []
 
-# Dynamically build the configuration list
 AUTH_PASSWORD_VALIDATORS = [
-    {'NAME': validator.strip()} for validator in validators_list if validator.strip()
+    {'NAME': v.strip()} for v in validators_list if v.strip()
 ]
 
 # Internationalization
