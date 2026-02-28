@@ -110,12 +110,15 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
+# restaurant/settings.py
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS=[
-    BASE_DIR,"static"
+
+# Add this line: This is where Django will collect all static files for production
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
 ]
 
 # Default primary key field type
