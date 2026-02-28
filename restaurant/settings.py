@@ -10,7 +10,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os
+from dotenv import load_dotenv
 from pathlib import Path
+
+# Load variables from .env
+load_dotenv()
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -83,25 +89,17 @@ DATABASES = {
     }
 }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-]
+# Get the string from .env and split it by commas
+validators_str = os.getenv('AUTH_PASSWORD_VALIDATORS_LIST', '')
+validators_list = validators_str.split(',') if validators_str else []
 
+# Dynamically build the configuration list
+AUTH_PASSWORD_VALIDATORS = [
+    {'NAME': validator.strip()} for validator in validators_list if validator.strip()
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
