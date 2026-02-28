@@ -18,10 +18,12 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the entire project
 COPY . .
 
-# Set proper permissions for the non-root user
-RUN chown -R django:django /app
+# Add this line to collect static files
+RUN python manage.py collectstatic --noinput
 
-# Security: Switch to the non-root user
+# Ensure the non-root user has access to the new folder
+RUN chown -R django:django /app/staticfiles
+
 USER django
 
 # Security & Performance: Set Production Environment Variables
