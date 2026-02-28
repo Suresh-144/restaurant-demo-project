@@ -23,8 +23,12 @@ jobs:
           pip install bandit
           bandit -r . -x ./venv
 
-      - name: Run Django Tests
-        run: python manage.py test
+      - name: Run Tests
+        env:
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          AUTH_PASSWORD_VALIDATORS_LIST: ${{ secrets.AUTH_PASSWORD_VALIDATORS_LIST }}
+        run: |
+          python manage.py test
 
   build-and-push:
     needs: test-and-scan
