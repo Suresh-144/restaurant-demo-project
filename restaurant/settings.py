@@ -32,7 +32,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = False
 
 # Change this line in restaurant/settings.py
-ALLOWED_HOSTS = ['projectlb-1866953302.ap-south-2.elb.amazonaws.com', 'localhost', '127.0.0.1', '*']
+ALLOWED_HOSTS = ['projectlb-1866953302.ap-south-2.elb.amazonaws.com', 'localhost', '127.0.0.1', '*','a4f3e376b860545688f5d7610ca2a61e-2052546315.ap-south-1.elb.amazonaws.com']
 
 
 # Application definition
