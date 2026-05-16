@@ -1,4 +1,4 @@
-FROM python:3.12-slim
+FROM python:3.12-alpine
 
 # Security: Create a non-root user to run the app
 RUN groupadd -r django && useradd -r -g django django
