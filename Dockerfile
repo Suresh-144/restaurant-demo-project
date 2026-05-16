@@ -1,11 +1,11 @@
-FROM python:3.12-alpine
+FROM python:3.12-slim
 
 # Security: Create a non-root user to run the app
 RUN groupadd -r django && useradd -r -g django django
 
 WORKDIR /app
 
-# 1. Critical Update: Upgrade system packages to fix vulnerabilities like CVE-2026-0861
+# 1. Critical Update: Upgrade system packages to fix vulnerabilities
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y --no-install-recommends curl && \
