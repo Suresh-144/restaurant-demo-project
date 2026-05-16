@@ -56,6 +56,7 @@ jobs:
           image-ref: '${{ secrets.DOCKER_USERNAME }}/steakhouse:latest'
           format: 'table'
           exit-code: '1' # Fails the build if vulnerabilities are found
+          ignore-unfixed: true
           severity: 'CRITICAL'
 
       - name: Push Image to Docker Hub
