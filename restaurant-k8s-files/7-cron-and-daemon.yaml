@@ -1,0 +1,48 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: db-backup
+  namespace: restaurant-prod
+spec:
+  schedule: "0 2 * * *" # Run at 2:00 AM every day
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: backup
+            image: postgres:15
+            command: ["/bin/sh", "-c", "pg_dump -U restaurant_admin -h postgres-svc restaurant_db > /tmp/backup.sql"]
+            envFrom:
+            - secretRef:
+                name: django-secrets
+          restartPolicy: OnFailure
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: fluentd-logger
+  namespace: kube-system
+spec:
+  selector:
+    matchLabels:
+      name: fluentd
+  template:
+    metadata:
+      labels:
+        name: fluentd
+    spec:
+      containers:
+      - name: fluentd
+        image: fluent/fluentd-kubernetes-daemonset:v1.16
+        volumeMounts:
+        - name: varlog
+          mountPath: /var/log
+      tolerations:
+      - operator: "Exists"
+        effect: "NoSchedule"
+      # ADDED: This defines the volume that the container mounts
+      volumes:
+      - name: varlog
+        hostPath:
+          path: /var/log

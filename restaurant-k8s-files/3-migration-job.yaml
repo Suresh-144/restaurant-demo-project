@@ -1,0 +1,18 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: django-db-migrate
+  namespace: restaurant-prod
+spec:
+  template:
+    spec:
+      containers:
+      - name: migrate
+        image: sueesh144/steakhouse:latest
+        command: ["python", "manage.py", "migrate"]
+        envFrom:
+        - configMapRef:
+            name: django-config
+        - secretRef:
+            name: django-secrets
+      restartPolicy: OnFailure

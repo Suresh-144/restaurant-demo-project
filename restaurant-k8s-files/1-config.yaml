@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: restaurant-prod
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: django-config
+  namespace: restaurant-prod
+data:
+  DEBUG: "False"
+  # Extracted from your .env setup
+  AUTH_PASSWORD_VALIDATORS_LIST: "django.contrib.auth.password_validation.UserAttributeSimilarityValidator,django.contrib.auth.password_validation.MinimumLengthValidator" 
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: django-secrets
+  namespace: restaurant-prod
+type: Opaque
+stringData:
+  # Base64 encoding is automatic with stringData
+  SECRET_KEY: "django-insecure-7wx=6q7l0ho(9eabjyzrrr_+lu7s9@k8-i-mrnj_-+zydgi0di" 
+  DB_PASSWORD: "super-secure-db-password"
